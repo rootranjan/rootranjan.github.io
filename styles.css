@@ -549,16 +549,20 @@ body {
 }
 
 .social-links a {
-    display: inline-block;
+    display: inline-flex;
     width: 40px;
     height: 40px;
     background: var(--primary-color);
     color: white;
     border-radius: 50%;
-    display: flex;
     align-items: center;
     justify-content: center;
     transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.social-links a i {
+    font-size: 1.2rem;
 }
 
 .social-links a:hover {

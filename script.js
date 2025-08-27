@@ -145,41 +145,44 @@
         });
     }
     
-    // Contact form with security
+    // Contact form with Google Forms integration
     function initContactForm() {
-        const contactForm = document.querySelector('.contact-form form');
+        const contactForm = document.querySelector('#consultationForm');
         if (!contactForm) return;
         
+        // Security: Handle Google Forms submission
         contactForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
             // Security: Rate limiting check
             if (isRateLimited()) {
+                e.preventDefault();
                 showNotification('Too many submissions. Please wait before trying again.', 'error');
                 return;
             }
             
-            // Security: Get and sanitize form data
-            const companyName = sanitizeInput(this.querySelector('input[placeholder="Company Name"]')?.value || '');
-            const contactName = sanitizeInput(this.querySelector('input[placeholder="Your Name"]')?.value || '');
-            const email = sanitizeInput(this.querySelector('input[type="email"]')?.value || '');
-            const service = sanitizeInput(this.querySelector('select')?.value || '');
-            const message = sanitizeInput(this.querySelector('textarea')?.value || '');
+            // Security: Get and sanitize form data for validation
+            const companyName = sanitizeInput(this.querySelector('input[name="entry.1234567890"]')?.value || '');
+            const contactName = sanitizeInput(this.querySelector('input[name="entry.1234567891"]')?.value || '');
+            const email = sanitizeInput(this.querySelector('input[name="entry.1234567892"]')?.value || '');
+            const service = sanitizeInput(this.querySelector('select[name="entry.1234567893"]')?.value || '');
+            const message = sanitizeInput(this.querySelector('textarea[name="entry.1234567894"]')?.value || '');
             
             // Security: Input validation
             if (!companyName || !contactName || !email || !service || !message) {
+                e.preventDefault();
                 showNotification('Please fill in all fields', 'error');
                 return;
             }
             
             // Security: Email validation
             if (!isValidEmail(email)) {
+                e.preventDefault();
                 showNotification('Please enter a valid email address', 'error');
                 return;
             }
             
             // Security: Length validation
             if (message.length > 1000) {
+                e.preventDefault();
                 showNotification('Message is too long. Please keep it under 1000 characters.', 'error');
                 return;
             }
@@ -187,22 +190,31 @@
             // Security: Increment rate limit counter
             formSubmissionCount++;
             
-            // Simulate form submission
+            // Show success message and handle form submission
             const submitBtn = this.querySelector('button[type="submit"]');
-            if (!submitBtn) return;
-            
-            const originalText = submitBtn.textContent;
-            submitBtn.textContent = 'Sending...';
-            submitBtn.disabled = true;
-            
-            // Simulate API call delay
-            safeSetTimeout(() => {
-                showNotification('Thank you! We\'ll get back to you within 24 hours.', 'success');
-                this.reset();
-                submitBtn.textContent = originalText;
-                submitBtn.disabled = false;
-            }, 2000);
+            if (submitBtn) {
+                const originalText = submitBtn.textContent;
+                submitBtn.textContent = 'Sending...';
+                submitBtn.disabled = true;
+                
+                // Reset form and button after successful submission
+                safeSetTimeout(() => {
+                    showNotification('Thank you! We\'ll get back to you within 24 hours.', 'success');
+                    this.reset();
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
+                }, 2000);
+            }
         });
+        
+        // Security: Handle iframe load for Google Forms
+        const hiddenIframe = document.getElementById('hidden_iframe');
+        if (hiddenIframe) {
+            hiddenIframe.addEventListener('load', function() {
+                // Form submitted successfully to Google Forms
+                console.log('Form submitted to Google Forms successfully');
+            });
+        }
     }
     
     // Animations with security

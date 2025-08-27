@@ -131,14 +131,14 @@
                     <p>We are a forward-thinking technology company specializing in AI-powered cybersecurity and custom application development. Our mission is to protect businesses from evolving digital threats while enabling growth through innovative technology solutions.</p>
                     <p>With years of experience in both security and development, we understand the unique challenges modern businesses face. We combine cutting-edge AI technology with proven security practices to deliver solutions that not only protect your assets but also drive business value.</p>
                     <div class="stats">
-                        <div class="stat">
+                        <!-- <div class="stat">
                             <h3>100+</h3>
                             <p>Projects Completed</p>
                         </div>
                         <div class="stat">
                             <h3>50+</h3>
                             <p>Businesses Protected</p>
-                        </div>
+                        </div> -->
                         <div class="stat">
                             <h3>24/7</h3>
                             <p>Security Monitoring</p>
@@ -223,31 +223,32 @@
                     </div>
                 </div>
                 <div class="contact-form">
-                    <form>
+                    <form id="consultationForm" action="https://docs.google.com/forms/d/e/1FAIpQLSdnq9YT715EiNTaiJaTZPGSQ72aJUJmYgQ4nndMxThXNgx9mw/formResponse" method="POST" target="hidden_iframe">
                         <div class="form-group">
-                            <input type="text" placeholder="Company Name" required>
+                            <input type="text" name="entry.755972856" placeholder="Company Name" required>
                         </div>
                         <div class="form-group">
-                            <input type="text" placeholder="Your Name" required>
+                            <input type="text" name="entry.246798732" placeholder="Contact Name" required>
                         </div>
                         <div class="form-group">
-                            <input type="email" placeholder="Email Address" required>
+                            <input type="email" name="entry.971905572" placeholder="Email Address" required>
                         </div>
                         <div class="form-group">
-                            <select required>
+                            <select name="entry.1551696183" required>
                                 <option value="">Select Service Interest</option>
-                                <option value="ai-security">AI-Powered Security</option>
-                                <option value="security-testing">Security Testing</option>
-                                <option value="app-development">Application Development</option>
-                                <option value="cloud-security">Cloud Security</option>
-                                <option value="consultation">General Consultation</option>
+                                <option value="AI-Powered Security Solutions">AI-Powered Security Solutions</option>
+                                <option value="Advanced Security Testing">Advanced Security Testing</option>
+                                <option value="Custom Application Development">Custom Application Development</option>
+                                <option value="Cloud Security & Infrastructure">Cloud Security & Infrastructure</option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <textarea placeholder="Tell us about your security needs or project requirements" rows="4"></textarea>
+                            <textarea name="entry.249340128" placeholder="Tell us about your security needs or project requirements" rows="4" required></textarea>
                         </div>
                         <button type="submit" class="btn btn-primary">Request Free Consultation</button>
                     </form>
+                    <!-- Hidden iframe for Google Forms submission -->
+                    <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
                 </div>
             </div>
         </div>
@@ -280,8 +281,8 @@
                 <div class="footer-section">
                     <h4>Connect</h4>
                     <div class="social-links">
-                        <a href="https://www.linkedin.com/in/rootranjan/" target="_blank"><i class="fab fa-linkedin"></i></a>
-                        <a href="https://github.com/rootranjan" target="_blank"><i class="fab fa-github"></i></a>
+                        <a href="https://www.linkedin.com/in/rootranjan/" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin"></i></a>
+                        <a href="https://github.com/rootranjan" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i></a>
                         <a href="mailto:bizwithranjan@gmail.com"><i class="fas fa-envelope"></i></a>
                     </div>
                 </div>
