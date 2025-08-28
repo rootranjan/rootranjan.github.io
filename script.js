@@ -145,44 +145,42 @@
         });
     }
     
-    // Contact form with Google Forms integration
+    // Contact form with email integration
     function initContactForm() {
         const contactForm = document.querySelector('#consultationForm');
-        if (!contactForm) return;
+        const sendEmailBtn = document.querySelector('#sendEmailBtn');
         
-        // Security: Handle Google Forms submission
-        contactForm.addEventListener('submit', function(e) {
+        if (!contactForm || !sendEmailBtn) return;
+        
+        // Handle email button click
+        sendEmailBtn.addEventListener('click', function() {
             // Security: Rate limiting check
             if (isRateLimited()) {
-                e.preventDefault();
                 showNotification('Too many submissions. Please wait before trying again.', 'error');
                 return;
             }
             
             // Security: Get and sanitize form data for validation
-            const companyName = sanitizeInput(this.querySelector('input[name="entry.755972856"]')?.value || '');
-            const contactName = sanitizeInput(this.querySelector('input[name="entry.246798732"]')?.value || '');
-            const email = sanitizeInput(this.querySelector('input[name="entry.971905572"]')?.value || '');
-            const service = sanitizeInput(this.querySelector('select[name="entry.1551696183"]')?.value || '');
-            const message = sanitizeInput(this.querySelector('textarea[name="entry.249340128"]')?.value || '');
+            const companyName = sanitizeInput(document.getElementById('companyName')?.value || '');
+            const contactName = sanitizeInput(document.getElementById('contactName')?.value || '');
+            const email = sanitizeInput(document.getElementById('emailAddress')?.value || '');
+            const service = sanitizeInput(document.getElementById('serviceInterest')?.value || '');
+            const message = sanitizeInput(document.getElementById('projectRequirements')?.value || '');
             
             // Security: Input validation
             if (!companyName || !contactName || !email || !service || !message) {
-                e.preventDefault();
                 showNotification('Please fill in all fields', 'error');
                 return;
             }
             
             // Security: Email validation
             if (!isValidEmail(email)) {
-                e.preventDefault();
                 showNotification('Please enter a valid email address', 'error');
                 return;
             }
             
             // Security: Length validation
             if (message.length > 1000) {
-                e.preventDefault();
                 showNotification('Message is too long. Please keep it under 1000 characters.', 'error');
                 return;
             }
@@ -200,48 +198,47 @@
             });
             
             // Show loading state
-            const submitBtn = this.querySelector('button[type="submit"]');
-            if (submitBtn) {
-                const originalText = submitBtn.textContent;
-                submitBtn.textContent = 'Submitting...';
-                submitBtn.disabled = true;
-            }
+            const originalText = this.textContent;
+            this.textContent = 'Preparing Email...';
+            this.disabled = true;
             
-            // IMPORTANT: Don't prevent default - let the form submit to Google Forms
-            // The form will redirect to Google's confirmation page
-            // This ensures the data actually gets sent to Google Forms
+            // Create email content
+            const subject = `Requesting consultation from ${contactName}`;
+            const body = `Hello RootRanjan Team,
+
+I would like to request a consultation for the following service:
+
+Company Name: ${companyName}
+Contact Name: ${contactName}
+Email Address: ${email}
+Service Interest: ${service}
+
+Project Requirements:
+${message}
+
+Please contact me to discuss how we can work together.
+
+Best regards,
+${contactName}`;
             
-            // Debug: Log that form is about to submit
-            console.log('Form validation passed, submitting to Google Forms...');
+            // Create mailto link
+            const mailtoLink = `mailto:bizwithranjan@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
             
-            // IMPORTANT: Don't prevent default - let the form submit to Google Forms
-            // The form will submit to the hidden iframe
-            // This ensures the data actually gets sent to Google Forms
+            // Open email client
+            window.location.href = mailtoLink;
             
-            // Debug: Log that form is about to submit
-            console.log('Form validation passed, submitting to Google Forms...');
-        });
-        
-        // Handle iframe load event for Google Forms submission
-        const hiddenIframe = document.getElementById('hidden_iframe');
-        if (hiddenIframe) {
-            hiddenIframe.addEventListener('load', function() {
-                console.log('Google Forms submission completed');
-                
-                // Show success message
-                showNotification('Form submitted successfully! Check your Google Form responses.', 'success');
+            // Show success message
+            showNotification('Email client opened! Please review and send the email.', 'success');
+            
+            // Reset button after a delay
+            safeSetTimeout(() => {
+                this.textContent = originalText;
+                this.disabled = false;
                 
                 // Reset the form
                 contactForm.reset();
-                
-                // Reset button
-                const submitBtn = contactForm.querySelector('button[type="submit"]');
-                if (submitBtn) {
-                    submitBtn.textContent = 'Request Free Consultation';
-                    submitBtn.disabled = false;
-                }
-            });
-        }
+            }, 2000);
+        });
     }
     
     // Animations with security
