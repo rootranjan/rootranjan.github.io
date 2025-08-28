@@ -223,7 +223,7 @@
                     </div>
                 </div>
                 <div class="contact-form">
-                    <form id="consultationForm" action="https://docs.google.com/forms/d/e/1FAIpQLSdnq9YT715EiNTaiJaTZPGSQ72aJUJmYgQ4nndMxThXNgx9mw/formResponse" method="POST" target="_blank">
+                    <form id="consultationForm" action="https://docs.google.com/forms/d/e/1FAIpQLSdnq9YT715EiNTaiJaTZPGSQ72aJUJmYgQ4nndMxThXNgx9mw/formResponse" method="POST" target="hidden_iframe">
                         <div class="form-group">
                             <input type="text" name="entry.755972856" placeholder="Company Name" required>
                         </div>
@@ -248,6 +248,8 @@
                         </div>
                         <button type="submit" class="btn btn-primary">Request Free Consultation</button>
                     </form>
+                    <!-- Hidden iframe for Google Forms submission -->
+                    <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
                 </div>
             </div>
         </div>
