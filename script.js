@@ -205,21 +205,25 @@
                 const originalText = submitBtn.textContent;
                 submitBtn.textContent = 'Submitting...';
                 submitBtn.disabled = true;
-                
-                // Show success message and let form submit to Google Forms
-                safeSetTimeout(() => {
-                    showNotification('Form submitted successfully! You will be redirected to Google Forms confirmation page.', 'success');
-                    
-                    // Reset button after showing message
-                    safeSetTimeout(() => {
-                        submitBtn.textContent = originalText;
-                        submitBtn.disabled = false;
-                    }, 1000);
-                }, 500);
             }
             
-            // Don't prevent default - let the form submit to Google Forms
+            // IMPORTANT: Don't prevent default - let the form submit to Google Forms
             // The form will redirect to Google's confirmation page
+            // This ensures the data actually gets sent to Google Forms
+            
+            // Debug: Log that form is about to submit
+            console.log('Form validation passed, submitting to Google Forms...');
+            
+            // Show success message after form submission
+            safeSetTimeout(() => {
+                showNotification('Form submitted successfully! Check your Google Form responses.', 'success');
+                
+                // Reset button
+                if (submitBtn) {
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
+                }
+            }, 1000);
         });
     }
     
