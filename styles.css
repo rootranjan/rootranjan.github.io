@@ -563,6 +563,13 @@ body {
 
 .social-links a i {
     font-size: 1.2rem;
+    display: flex !important;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    font-family: "Font Awesome 6 Free", "Font Awesome 6 Pro", "FontAwesome", sans-serif;
+    font-weight: 900;
 }
 
 .social-links a:hover {
