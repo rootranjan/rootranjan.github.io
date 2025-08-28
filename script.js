@@ -160,11 +160,11 @@
             }
             
             // Security: Get and sanitize form data for validation
-            const companyName = sanitizeInput(this.querySelector('input[name="entry.1234567890"]')?.value || '');
-            const contactName = sanitizeInput(this.querySelector('input[name="entry.1234567891"]')?.value || '');
-            const email = sanitizeInput(this.querySelector('input[name="entry.1234567892"]')?.value || '');
-            const service = sanitizeInput(this.querySelector('select[name="entry.1234567893"]')?.value || '');
-            const message = sanitizeInput(this.querySelector('textarea[name="entry.1234567894"]')?.value || '');
+            const companyName = sanitizeInput(this.querySelector('input[name="entry.755972856"]')?.value || '');
+            const contactName = sanitizeInput(this.querySelector('input[name="entry.246798732"]')?.value || '');
+            const email = sanitizeInput(this.querySelector('input[name="entry.971905572"]')?.value || '');
+            const service = sanitizeInput(this.querySelector('select[name="entry.1551696183"]')?.value || '');
+            const message = sanitizeInput(this.querySelector('textarea[name="entry.249340128"]')?.value || '');
             
             // Security: Input validation
             if (!companyName || !contactName || !email || !service || !message) {
