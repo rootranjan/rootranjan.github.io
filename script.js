@@ -214,17 +214,34 @@
             // Debug: Log that form is about to submit
             console.log('Form validation passed, submitting to Google Forms...');
             
-            // Show success message after form submission
-            safeSetTimeout(() => {
+            // IMPORTANT: Don't prevent default - let the form submit to Google Forms
+            // The form will submit to the hidden iframe
+            // This ensures the data actually gets sent to Google Forms
+            
+            // Debug: Log that form is about to submit
+            console.log('Form validation passed, submitting to Google Forms...');
+        });
+        
+        // Handle iframe load event for Google Forms submission
+        const hiddenIframe = document.getElementById('hidden_iframe');
+        if (hiddenIframe) {
+            hiddenIframe.addEventListener('load', function() {
+                console.log('Google Forms submission completed');
+                
+                // Show success message
                 showNotification('Form submitted successfully! Check your Google Form responses.', 'success');
                 
+                // Reset the form
+                contactForm.reset();
+                
                 // Reset button
+                const submitBtn = contactForm.querySelector('button[type="submit"]');
                 if (submitBtn) {
-                    submitBtn.textContent = originalText;
+                    submitBtn.textContent = 'Request Free Consultation';
                     submitBtn.disabled = false;
                 }
-            }, 1000);
-        });
+            });
+        }
     }
     
     // Animations with security
