@@ -559,6 +559,19 @@ body {
     justify-content: center;
     transition: all 0.3s ease;
     text-decoration: none;
+    position: relative;
+}
+
+/* Debug: Add border to see the icon containers */
+.social-links a::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
 }
 
 .social-links a i {
@@ -570,6 +583,25 @@ body {
     justify-content: center;
     font-family: "Font Awesome 6 Free", "Font Awesome 6 Pro", "FontAwesome", sans-serif;
     font-weight: 900;
+}
+
+/* Fallback for Font Awesome icons */
+.social-links a i.fab.fa-linkedin::before {
+    content: "in";
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+}
+
+.social-links a i.fab.fa-github::before {
+    content: "GH";
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+}
+
+.social-links a i.fas.fa-envelope::before {
+    content: "@";
+    font-family: Arial, sans-serif;
+    font-weight: bold;
 }
 
 .social-links a:hover {

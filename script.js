@@ -190,31 +190,37 @@
             // Security: Increment rate limit counter
             formSubmissionCount++;
             
-            // Show success message and handle form submission
+            // Log form data for debugging
+            console.log('Form data being submitted:', {
+                companyName,
+                contactName,
+                email,
+                service,
+                message
+            });
+            
+            // Show loading state
             const submitBtn = this.querySelector('button[type="submit"]');
             if (submitBtn) {
                 const originalText = submitBtn.textContent;
-                submitBtn.textContent = 'Sending...';
+                submitBtn.textContent = 'Submitting...';
                 submitBtn.disabled = true;
                 
-                // Reset form and button after successful submission
+                // Show success message and let form submit to Google Forms
                 safeSetTimeout(() => {
-                    showNotification('Thank you! We\'ll get back to you within 24 hours.', 'success');
-                    this.reset();
-                    submitBtn.textContent = originalText;
-                    submitBtn.disabled = false;
-                }, 2000);
+                    showNotification('Form submitted successfully! You will be redirected to Google Forms confirmation page.', 'success');
+                    
+                    // Reset button after showing message
+                    safeSetTimeout(() => {
+                        submitBtn.textContent = originalText;
+                        submitBtn.disabled = false;
+                    }, 1000);
+                }, 500);
             }
+            
+            // Don't prevent default - let the form submit to Google Forms
+            // The form will redirect to Google's confirmation page
         });
-        
-        // Security: Handle iframe load for Google Forms
-        const hiddenIframe = document.getElementById('hidden_iframe');
-        if (hiddenIframe) {
-            hiddenIframe.addEventListener('load', function() {
-                // Form submitted successfully to Google Forms
-                console.log('Form submitted to Google Forms successfully');
-            });
-        }
     }
     
     // Animations with security
@@ -469,6 +475,29 @@
     } else {
         initApp();
     }
+    
+    // Debug: Check if Font Awesome is loading
+    function checkFontAwesome() {
+        const testIcon = document.createElement('i');
+        testIcon.className = 'fas fa-check';
+        testIcon.style.position = 'absolute';
+        testIcon.style.left = '-9999px';
+        document.body.appendChild(testIcon);
+        
+        const computedStyle = window.getComputedStyle(testIcon, '::before');
+        const content = computedStyle.getPropertyValue('content');
+        
+        console.log('Font Awesome check:', {
+            iconExists: !!testIcon,
+            hasContent: content !== 'none',
+            computedStyle: computedStyle.fontFamily
+        });
+        
+        document.body.removeChild(testIcon);
+    }
+    
+    // Check Font Awesome after a delay to ensure it's loaded
+    safeSetTimeout(checkFontAwesome, 2000);
     
     // Security: Prevent global scope pollution
     window.RootRanjanApp = {
